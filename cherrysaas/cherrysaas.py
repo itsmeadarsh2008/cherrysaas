@@ -8,8 +8,6 @@ class State(rx.State):
 
     ...
 
-tweet = """<div align="center" style="border-radius:25px;"><blockquote class="twitter-tweet" data-dnt="true" align="center"><p lang="en" dir="ltr">CherrySaaS is an open-source SaaS template that aims to release its product in Pure-Python, powered by Reflex. A paid subscription is required for creating plans over $150.</p>&mdash; Confident Sushi (@AdarshGourab) <a href="https://twitter.com/AdarshGourab/status/1798399664326398045?ref_src=twsrc%5Etfw">June 5, 2024</a></blockquote>
-<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script></div>"""
 def navbar_link(text: str, url: str) -> rx.Component:
     return rx.link(rx.text(text, size="4", weight="medium"), href=url)
 
@@ -223,14 +221,33 @@ def index() -> rx.Component:
                 trim="normal",
                 size="9",
                 align="center",
-                letter_spacing="2.5px"
+                letter_spacing="2.5px",
+                style={
+  "backgroundColor": "#ffb399",
+  "backgroundImage": "radial-gradient(at 33% 70%, hsla(3,75%,61%,1) 0px, transparent 50%),\r\n                     radial-gradient(at 89% 84%, hsla(261,86%,61%,1) 0px, transparent 50%),\r\n                     radial-gradient(at 21% 98%, hsla(339,99%,75%,1) 0px, transparent 50%),\r\n                     radial-gradient(at 10% 52%, hsla(275,87%,77%,1) 0px, transparent 50%),\r\n                     radial-gradient(at 82% 53%, hsla(172,64%,74%,1) 0px, transparent 50%),\r\n                     radial-gradient(at 98% 6%, hsla(174,90%,64%,1) 0px, transparent 50%),\r\n                     radial-gradient(at 48% 12%, hsla(330,70%,71%,1) 0px, transparent 50%)",
+  "backgroundClip": "text",
+  "-webkitBackgroundClip": "text",
+  "color": "transparent",
+  "animation": "gradient-animation 1s ease infinite"
+}
             ),
-            rx.html(tweet),
+            rx.text("CherrySaaS is an open-source SaaS template that aims to release its product in Pure-Python, powered by Reflex. A paid subscription is required for creating plans over $150.",align="center", color="gray"),
             padding="100px",
         ),
         footer_newsletter(),
     )
 
 
-app = rx.App()
+app = rx.App(style={
+"@keyframes gradient-animation": {
+  "0%": {
+    "backgroundPosition": "0% 50%"
+  },
+  "50%": {
+    "backgroundPosition": "100% 50%"
+  },
+  "100%": {
+    "backgroundPosition": "0% 50%"
+  }
+}})
 app.add_page(index)
