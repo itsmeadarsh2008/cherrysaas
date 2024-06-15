@@ -3,3 +3,5 @@ a cherisable saas pythonic reflex template for humans, cherryblossom-inspired pe
 # WORK IN PROGRESS 🚧
 Click Watch To Stay Updated. 👀
 Please Star This Repository. 🌟
+
+### NEW: ADDED DYANMIC PRICING CARDS (BASED ON LISTS)

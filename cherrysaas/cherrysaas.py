@@ -1,19 +1,86 @@
 """Welcome to Reflex! This file outlines the steps to create a basic app."""
 
 import reflex as rx
-from rxconfig import config
 
-class State(rx.State):
-    """The app state."""
+# from reflex import chakra
+# from rxconfig import config
+from reflex_motion import motion
 
-    ...
+# class State(rx.State):
+#     """The app state."""
+
+
+#     ...
+def feature_item(text: str) -> rx.Component:
+    return rx.hstack(
+        rx.icon("check", color=rx.color("grass", 9)),
+        rx.text(text, size="4"),
+    )
+
+
+def pricing_card(
+    title: str,
+    description: str,
+    price: str,
+    price_unit: str,
+    features_list: list[str],
+    button_text: str = "Get started",
+) -> rx.Component:
+    return rx.vstack(
+        rx.vstack(
+            rx.text(title, weight="bold", size="6"),
+            rx.text(
+                description,
+                size="4",
+                opacity=0.8,
+                align="center",
+            ),
+            rx.hstack(
+                rx.text(
+                    price,
+                    weight="bold",
+                    font_size="3rem",
+                    trim="both",
+                ),
+                rx.text(
+                    price_unit,
+                    size="4",
+                    opacity=0.8,
+                    trim="both",
+                ),
+                width="100%",
+                align_items="end",
+                justify="center",
+            ),
+            width="100%",
+            align="center",
+            spacing="6",
+        ),
+        rx.vstack(
+            *[feature_item(feature) for feature in features_list],
+            width="100%",
+            align_items="start",
+        ),
+        rx.button(
+            button_text,
+            size="3",
+            variant="solid",
+            width="100%",
+            color_scheme="blue",
+        ),
+        spacing="6",
+        border=f"1.5px solid {rx.color('gray', 5)}",
+        background=rx.color("gray", 1),
+        padding="28px",
+        width="100%",
+        max_width="400px",
+        justify="center",
+        border_radius="0.5rem",
+    )
+
 
 def navbar_link(text: str, url: str) -> rx.Component:
     return rx.link(rx.text(text, size="4", weight="medium"), href=url)
-
-
-def navbar_link(text: str, url: str) -> rx.Component:
-    return rx.link(rx.text(text, size="3", weight="medium"), href=url)
 
 
 def navbar_buttons() -> rx.Component:
@@ -35,7 +102,7 @@ def navbar_buttons() -> rx.Component:
                     navbar_link("About 📗", "/#"),
                     navbar_link("Pricing 💰", "/#"),
                     navbar_link("Contact 📞", "/#"),
-                    spacing="5",
+                    spacing="4",
                 ),
                 rx.hstack(
                     rx.button(
@@ -87,15 +154,15 @@ def navbar_buttons() -> rx.Component:
         # z_index="5",
         width="100%",
     )
+
+
 def footer_item(text: str, href: str) -> rx.Component:
     return rx.link(rx.text(text, size="3"), href=href)
 
 
 def footer_items_1() -> rx.Component:
     return rx.flex(
-        rx.heading(
-            "PRODUCTS", size="4", weight="bold", as_="h3"
-        ),
+        rx.heading("PRODUCTS", size="4", weight="bold", as_="h3"),
         footer_item("Web Design", "/#"),
         footer_item("Web Development", "/#"),
         footer_item("E-commerce", "/#"),
@@ -109,9 +176,7 @@ def footer_items_1() -> rx.Component:
 
 def footer_items_2() -> rx.Component:
     return rx.flex(
-        rx.heading(
-            "RESOURCES", size="4", weight="bold", as_="h3"
-        ),
+        rx.heading("RESOURCES", size="4", weight="bold", as_="h3"),
         footer_item("Blog", "/#"),
         footer_item("Case Studies", "/#"),
         footer_item("Whitepapers", "/#"),
@@ -210,44 +275,85 @@ def footer_newsletter() -> rx.Component:
         width="100%",
     )
 
+
+# Example usage
+beginner_features = [
+    "24/7 customer support",
+    "Daily backups",
+    "Advanced analytics",
+    "Customizable templates",
+    "Priority email support",
+]
+pro_features = [
+    "Daily backups",
+    "Advanced analytics",
+    "Customizable templates",
+    "Priority email support",
+]
+
 def index() -> rx.Component:
     # Welcome Page (Index)
     return rx.container(
         rx.hstack(rx.logo(), rx.color_mode.button()),
         navbar_buttons(),
         rx.container(
-            rx.heading(
-                "BUILD YOUR SAAS TODAY. SHIP IT NEXT DAY.",
-                trim="normal",
-                size="9",
-                align="center",
-                letter_spacing="2.5px",
-                style={
-  "backgroundColor": "#ffb399",
-  "backgroundImage": "radial-gradient(at 33% 70%, hsla(3,75%,61%,1) 0px, transparent 50%),\r\n                     radial-gradient(at 89% 84%, hsla(261,86%,61%,1) 0px, transparent 50%),\r\n                     radial-gradient(at 21% 98%, hsla(339,99%,75%,1) 0px, transparent 50%),\r\n                     radial-gradient(at 10% 52%, hsla(275,87%,77%,1) 0px, transparent 50%),\r\n                     radial-gradient(at 82% 53%, hsla(172,64%,74%,1) 0px, transparent 50%),\r\n                     radial-gradient(at 98% 6%, hsla(174,90%,64%,1) 0px, transparent 50%),\r\n                     radial-gradient(at 48% 12%, hsla(330,70%,71%,1) 0px, transparent 50%)",
-  "backgroundClip": "text",
-  "-webkitBackgroundClip": "text",
-  "color": "transparent",
-  "animation": "gradient-animation 1s ease infinite"
-}
+            motion(
+                rx.heading(
+                    "BUILD YOUR SAAS TODAY. SHIP IT NEXT DAY.",
+                    trim="normal",
+                    size="9",
+                    align="center",
+                    letter_spacing="2.5px",
+                    style={
+                        "backgroundColor": "#ffb399",
+                        "backgroundImage": "radial-gradient(at 33% 70%, hsla(3,75%,61%,1) 0px, transparent 50%),\r\n                     radial-gradient(at 89% 84%, hsla(261,86%,61%,1) 0px, transparent 50%),\r\n                     radial-gradient(at 21% 98%, hsla(339,99%,75%,1) 0px, transparent 50%),\r\n                     radial-gradient(at 10% 52%, hsla(275,87%,77%,1) 0px, transparent 50%),\r\n                     radial-gradient(at 82% 53%, hsla(172,64%,74%,1) 0px, transparent 50%),\r\n                     radial-gradient(at 98% 6%, hsla(174,90%,64%,1) 0px, transparent 50%),\r\n                     radial-gradient(at 48% 12%, hsla(330,70%,71%,1) 0px, transparent 50%)",
+                        "backgroundClip": "text",
+                        "-webkitBackgroundClip": "text",
+                        "color": "transparent",
+                        "animation": "gradient-animation 1s ease infinite",
+                    },
+                ),
+                initial={"scale": 1},
+                while_hover={"scale": 1.2},
             ),
-            rx.text("CherrySaaS is an open-source SaaS template that aims to release its product in Pure-Python, powered by Reflex. A paid subscription is required for creating plans over $150.",align="center", color="gray"),
+            rx.text(
+                "CherrySaaS is an open-source SaaS template that aims to release its product in Pure-Python, powered by Reflex. A paid subscription is required for creating plans over $150.",
+                align="center",
+                color="gray",
+                padding="75px",
+            ),
             padding="100px",
+        ),
+        rx.flex(
+            pricing_card(
+                title="Beginner",
+                description="Ideal choice for personal use & for your next project.",
+                price="$39",
+                price_unit="/month",
+                features_list=beginner_features
+            ),
+            pricing_card(
+                title="Pro",
+                description="Everything in Beginner, plus all premium features.",
+                price="$59",
+                price_unit="/month",
+                features_list=pro_features
+            ),
+            spacing="2",
+            padding="20px",
+            align="center",
         ),
         footer_newsletter(),
     )
 
 
-app = rx.App(style={
-"@keyframes gradient-animation": {
-  "0%": {
-    "backgroundPosition": "0% 50%"
-  },
-  "50%": {
-    "backgroundPosition": "100% 50%"
-  },
-  "100%": {
-    "backgroundPosition": "0% 50%"
-  }
-}})
+app = rx.App(
+    style={
+        "@keyframes gradient-animation": {
+            "0%": {"background_position": "0% 50%"},
+            "50%": {"background_position": "100% 50%"},
+            "100%": {"background_position": "0% 50%"},
+        }
+    }
+)
 app.add_page(index)
