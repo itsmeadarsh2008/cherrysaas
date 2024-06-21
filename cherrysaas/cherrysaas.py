@@ -26,56 +26,61 @@ def pricing_card(
     features_list: list[str],
     button_text: str = "Get started",
 ) -> rx.Component:
-    return rx.vstack(
+    return motion(
         rx.vstack(
-            rx.text(title, weight="bold", size="6"),
-            rx.text(
-                description,
-                size="4",
-                opacity=0.8,
-                align="center",
-            ),
-            rx.hstack(
+            rx.vstack(
+                rx.text(title, weight="bold", size="6"),
                 rx.text(
-                    price,
-                    weight="bold",
-                    font_size="3rem",
-                    trim="both",
-                ),
-                rx.text(
-                    price_unit,
+                    description,
                     size="4",
                     opacity=0.8,
-                    trim="both",
+                    align="center",
+                ),
+                rx.hstack(
+                    rx.text(
+                        price,
+                        weight="bold",
+                        font_size="3rem",
+                        trim="both",
+                    ),
+                    rx.text(
+                        price_unit,
+                        size="4",
+                        opacity=0.8,
+                        trim="both",
+                    ),
+                    width="100%",
+                    align_items="end",
+                    justify="center",
                 ),
                 width="100%",
-                align_items="end",
-                justify="center",
+                align="center",
+                spacing="6",
             ),
-            width="100%",
-            align="center",
+            rx.vstack(
+                *[feature_item(feature) for feature in features_list],
+                width="100%",
+                align_items="start",
+            ),
+            rx.button(
+                button_text,
+                size="3",
+                variant="solid",
+                width="100%",
+                color_scheme="blue",
+            ),
             spacing="6",
-        ),
-        rx.vstack(
-            *[feature_item(feature) for feature in features_list],
+            border=f"1.5px solid {rx.color('gray', 5)}",
+            background=rx.color("gray", 1),
+            padding="28px",
             width="100%",
-            align_items="start",
+            max_width="400px",
+            justify="center",
+            border_radius="0.5rem",
         ),
-        rx.button(
-            button_text,
-            size="3",
-            variant="solid",
-            width="100%",
-            color_scheme="blue",
-        ),
-        spacing="6",
-        border=f"1.5px solid {rx.color('gray', 5)}",
-        background=rx.color("gray", 1),
-        padding="28px",
-        width="100%",
-        max_width="400px",
-        justify="center",
-        border_radius="0.5rem",
+        initial={"scale": 1},
+        while_hover={"scale": 1.2},
+        transition={"type": "spring", "stiffness": 400, "damping": 17}
     )
 
 
@@ -285,11 +290,71 @@ beginner_features = [
     "Priority email support",
 ]
 pro_features = [
+    "Unlimited users",
+    "Unlimited projects",
+    "Unlimited team members",
+    "24/7 customer support",
     "Daily backups",
     "Advanced analytics",
     "Customizable templates",
     "Priority email support",
 ]
+enterprise_features = [
+    "Unlimited users",
+    "Unlimited projects",
+    "Unlimited team members",
+    "24/7 customer support",
+    "Daily backups",
+    "Advanced analytics",
+    "Customizable templates",
+    "Priority email support",
+]
+faq_items = [
+    (
+        "What is CherrySaaS?",
+        f"CherrySaaS is a 100% open-source Reflex template for building SaaS applications.",
+    ),
+    (
+        "How do I get started with CherrySaaS?",
+        "You can get started by visiting the CherrySaaS documentation.",
+    ),
+    ("Is CherrySaaS free to use?", "CherrySaaS offers both free and premium plans."),
+    (
+        "What payment options do I have?",
+        "CherrySaaS has Stripe and LemonSqueezy as payment options. UPI is not available.",
+    ),
+    (
+        "How fast I can build SaaS?",
+        "Make SaaS within a day if you're a mediocre. CherrySaaS is built with Reflex in mind.",
+    ),
+    (
+        "How do I contribute?",
+        "If you're interested in contributing, please visit our GitHub repository. cherryblossom-inspired perfection. 🌸",
+    ),
+]
+
+
+def faq_section() -> rx.Component:
+    # Create an accordion for the FAQ section
+    return rx.chakra.accordion(
+        # Generate an accordion item for each FAQ item
+        *[
+            rx.chakra.accordion_item(
+                rx.chakra.accordion_button(
+                    rx.chakra.heading(question, size="md"),
+                    rx.chakra.accordion_icon(),
+                ),
+                rx.chakra.accordion_panel(rx.chakra.text(answer)),
+            )
+            for question, answer in faq_items
+        ],
+        allow_toggle=True,  # Allow opening multiple items at once
+        width="100%",
+        top_padding="20px",
+        bottom_padding="20px",
+        margin="30px",
+    )
+
 
 def index() -> rx.Component:
     # Welcome Page (Index)
@@ -302,6 +367,7 @@ def index() -> rx.Component:
                     "BUILD YOUR SAAS TODAY. SHIP IT NEXT DAY.",
                     trim="normal",
                     size="9",
+                    as_="h1",
                     align="center",
                     letter_spacing="2.5px",
                     style={
@@ -315,34 +381,48 @@ def index() -> rx.Component:
                 ),
                 initial={"scale": 1},
                 while_hover={"scale": 1.2},
-            ),
-            rx.text(
-                "CherrySaaS is an open-source SaaS template that aims to release its product in Pure-Python, powered by Reflex. A paid subscription is required for creating plans over $150.",
-                align="center",
-                color="gray",
-                padding="75px",
+                transition={"type": "spring", "stiffness": 400, "damping": 17}
             ),
             padding="100px",
         ),
-        rx.flex(
+        rx.text(
+            "CherrySaaS is an open-source SaaS template built on Reflex and performant technologies 🐲",
+            align="center",
+            size="4",
+            variant="surface",
+        ),
+        rx.hstack(
             pricing_card(
                 title="Beginner",
                 description="Ideal choice for personal use & for your next project.",
                 price="$39",
                 price_unit="/month",
-                features_list=beginner_features
+                features_list=beginner_features,
             ),
             pricing_card(
                 title="Pro",
                 description="Everything in Beginner, plus all premium features.",
                 price="$59",
                 price_unit="/month",
-                features_list=pro_features
+                features_list=pro_features,
             ),
-            spacing="2",
+            pricing_card(
+                title="Enterprise",
+                description="Everything in Pro, plus all enterprise features.",
+                price="$399",
+                price_unit="/month",
+                features_list=enterprise_features,
+            ),
+            spacing="4",
             padding="20px",
-            align="center",
+            flex_direction=["column", "column", "row"],
+            width="100%",
+            align_items="center",
         ),
+        rx.heading(
+            "FAQ", trim="normal", size="7", as_="h1", weight="bold", align="center"
+        ),
+        faq_section(),
         footer_newsletter(),
     )
 
