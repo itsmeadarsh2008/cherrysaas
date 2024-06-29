@@ -53,6 +53,7 @@
 #Pipfile.lock
 #pdm.lock
 #poetry.lock
+.ruff_cache/
 *$py.class
 *.cover
 *.db

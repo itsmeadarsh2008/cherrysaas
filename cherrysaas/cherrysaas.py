@@ -1,6 +1,7 @@
 """Welcome to Reflex! This file outlines the steps to create a basic app."""
 
 import reflex as rx
+from cherrysaas.blog import blog
 
 # from reflex import chakra
 # from rxconfig import config
@@ -80,7 +81,7 @@ def pricing_card(
         ),
         initial={"scale": 1},
         while_hover={"scale": 1.2},
-        transition={"type": "spring", "stiffness": 400, "damping": 17}
+        transition={"type": "spring", "stiffness": 400, "damping": 17},
     )
 
 
@@ -312,7 +313,7 @@ enterprise_features = [
 faq_items = [
     (
         "What is CherrySaaS?",
-        f"CherrySaaS is a 100% open-source Reflex template for building SaaS applications.",
+        "CherrySaaS is a 100% open-source Reflex template for building SaaS applications.",
     ),
     (
         "How do I get started with CherrySaaS?",
@@ -381,7 +382,7 @@ def index() -> rx.Component:
                 ),
                 initial={"scale": 1},
                 while_hover={"scale": 1.2},
-                transition={"type": "spring", "stiffness": 400, "damping": 17}
+                transition={"type": "spring", "stiffness": 400, "damping": 17},
             ),
             padding="100px",
         ),
@@ -437,3 +438,4 @@ app = rx.App(
     }
 )
 app.add_page(index)
+app.add_page(blog)
