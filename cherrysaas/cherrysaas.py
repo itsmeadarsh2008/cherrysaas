@@ -1,6 +1,7 @@
 """Welcome to Reflex! This file outlines the steps to create a basic app."""
 
 import reflex as rx
+import reflex_chakra as rc
 from cherrysaas.blog import blog
 
 # from reflex import chakra
@@ -337,15 +338,15 @@ faq_items = [
 
 def faq_section() -> rx.Component:
     # Create an accordion for the FAQ section
-    return rx.chakra.accordion(
+    return rc.accordion(
         # Generate an accordion item for each FAQ item
         *[
-            rx.chakra.accordion_item(
-                rx.chakra.accordion_button(
-                    rx.chakra.heading(question, size="md"),
-                    rx.chakra.accordion_icon(),
+            rc.accordion_item(
+                rc.accordion_button(
+                    rc.heading(question, size="md"),
+                    rc.accordion_icon(),
                 ),
-                rx.chakra.accordion_panel(rx.chakra.text(answer)),
+                rc.accordion_panel(rc.text(answer)),
             )
             for question, answer in faq_items
         ],

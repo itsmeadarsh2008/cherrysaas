@@ -53,7 +53,6 @@
 #Pipfile.lock
 #pdm.lock
 #poetry.lock
-.ruff_cache/
 *$py.class
 *.cover
 *.db
@@ -88,6 +87,7 @@
 .pytest_cache/
 .pytype/
 .ropeproject
+.ruff_cache/
 .scrapy
 .spyderproject
 .spyproject
@@ -101,6 +101,7 @@ ENV/
 MANIFEST
 __pycache__/
 __pypackages__/
+assets/external/
 build/
 celerybeat-schedule
 celerybeat.pid
